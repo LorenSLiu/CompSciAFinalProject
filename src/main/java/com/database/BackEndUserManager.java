@@ -3,6 +3,7 @@ package com.database;
 //import com.application.description.Admin;
 import Key.Key;
 import com.application.description.Employee;
+import com.application.description.EmployeeBehavior;
 import com.application.description.Employees;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 import static com.database.DBHelper.GetDocumentArray;
 @SuppressWarnings("all")
-public class BackEndUserManager {
+public class BackEndUserManager implements EmployeeBehavior {
     static DBHelper dbHelper = new DBHelper();
     public static void main(String[] args) {
         BackEndUserManager BackEndUserManager = new BackEndUserManager();
@@ -29,7 +30,7 @@ public class BackEndUserManager {
 //        System.out.println(BackEndUserManager.Requester("John", "Doe"));
 //        System.out.println(BackEndUserManager.Requester("Loren"));
     }
-
+    @Override
     public ArrayList<Employee> GetUser(String firstName) {
         ResponseEntity<String> responseData = Requester(firstName);
         JSONArray documentsArray = GetDocumentArray(responseData);
@@ -46,6 +47,7 @@ public class BackEndUserManager {
         }
         return employees;
     }
+    @Override
     public ArrayList<Employee> GetUser(String firstName, String lastName) {
         ResponseEntity<String> responseData = Requester(firstName, lastName);
         JSONArray documentsArray = GetDocumentArray(responseData);
@@ -59,6 +61,7 @@ public class BackEndUserManager {
         }
         return employees;
     }
+    @Override
     public ArrayList<Employees> GetAllEmployee() {
         ResponseEntity<String> responseData = RequesterGetAllEmployee();
         JSONArray documentsArray = GetDocumentArray(responseData);

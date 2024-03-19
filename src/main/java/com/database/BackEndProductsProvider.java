@@ -1,6 +1,7 @@
 package com.database;
 
 import com.application.description.Product;
+import com.application.description.ProductBehavior;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,9 +21,12 @@ import Key.Key;
 import static com.database.DBHelper.GetDocumentArray;
 
 @SuppressWarnings("all")
-public class BackEndProductsProvider {
+public class BackEndProductsProvider implements ProductBehavior {
     static BackEndProductsProvider backEndProductsProvider = new BackEndProductsProvider();
     static DBHelper dbHelper = new DBHelper();
+
+
+
     //enter for test only
     public static void main(String[] args) {
 //        BackEndProductsProvider backEndProductsProvider = new BackEndProductsProvider();
@@ -32,6 +36,7 @@ public class BackEndProductsProvider {
         backEndProductsProvider.DeleteProduct("testProduct");
         //System.out.println(BackEndProductsProvider.ResponseEntityToJSON(BackEndProductsProvider.GetProduct("")));
     }
+    @Override
     public int getTotalInventory(){
         ArrayList<Product> products = new ArrayList<>();
         products = GetAllProducts();
@@ -41,6 +46,7 @@ public class BackEndProductsProvider {
         }
         return total;
     }
+    @Override
     public ArrayList<Product> GetAllProducts() {
         ResponseEntity<String> responseData = RequesterGetAllProduct();
         JSONArray documentsArray = GetDocumentArray(responseData);
@@ -56,7 +62,7 @@ public class BackEndProductsProvider {
         return products;
     }
 
-
+    @Override
     public ArrayList<Product> GetProducts(String ProductName) {
         ResponseEntity<String> responseData = getRequesters(ProductName);
         JSONArray documentsArray = GetDocumentArray(responseData);
