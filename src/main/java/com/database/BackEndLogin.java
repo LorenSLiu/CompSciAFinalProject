@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import Key.Key;
+
 public class BackEndLogin {
     //enter for test only
 //    public static void main(String[] args) {
@@ -37,7 +39,7 @@ public class BackEndLogin {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Access-Control-Request-Headers", "*");
-        headers.set("api-key", "UloVIfogqJQmpAVKvk1vp6Cg6gXLLNZDnCURuoxAtU4D5GuAitTQZx3ccPR5SxJE");
+        headers.set("api-key", Key.APIKEY());
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
         Map<String, Object> map = new HashMap<>();
@@ -51,22 +53,9 @@ public class BackEndLogin {
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(map, headers);
 
-        ResponseEntity<String> response = restTemplate.postForEntity("https://us-west-2.aws.data.mongodb-api.com/app/data-lfiqp/endpoint/data/v1/action/find", entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(Key.FIND(), entity, String.class);
         System.out.println(response);
         return response;
     }
 
 }
-/*
-curl --location --request POST 'https://us-west-2.aws.data.mongodb-api.com/app/data-lfiqp/endpoint/data/v1/action/findOne' \
---header 'Content-Type: application/json' \
---header 'Access-Control-Request-Headers: *' \
---header 'api-key: UloVIfogqJQmpAVKvk1vp6Cg6gXLLNZDnCURuoxAtU4D5GuAitTQZx3ccPR5SxJE' \
---data-raw '{
-    "collection":"LoginInfo",
-    "database":"CompSciFinal",
-    "dataSource":"ItemList",
-    "projection": {"_id": 1}
-}'
-
- */
